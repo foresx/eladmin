@@ -125,7 +125,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 自定义匿名访问所有url放行 ： 允许 匿名和带权限以及登录用户访问
                 .antMatchers(anonymousUrls.toArray(new String[0])).permitAll()
                 // 所有请求都需要认证
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 // 防止iframe 造成跨域
                 .and().headers().frameOptions().disable();
         httpSecurity

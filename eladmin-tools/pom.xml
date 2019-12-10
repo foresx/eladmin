@@ -26,25 +26,25 @@
             <version>2.3</version>
         </dependency>
 
-        <!--邮件依赖-->
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>${mail.version}</version>
-        </dependency>
+        <!--&lt;!&ndash;邮件依赖&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>javax.mail</groupId>-->
+            <!--<artifactId>mail</artifactId>-->
+            <!--<version>${mail.version}</version>-->
+        <!--</dependency>-->
 
-        <!--七牛云存储-->
-        <dependency>
-            <groupId>com.qiniu</groupId>
-            <artifactId>qiniu-java-sdk</artifactId>
-            <version>${qiniu.version}</version>
-        </dependency>
+        <!--&lt;!&ndash;七牛云存储&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.qiniu</groupId>-->
+            <!--<artifactId>qiniu-java-sdk</artifactId>-->
+            <!--<version>${qiniu.version}</version>-->
+        <!--</dependency>-->
 
-        <!--支付宝依赖-->
-        <dependency>
-            <groupId>com.alipay.sdk</groupId>
-            <artifactId>alipay-sdk-java</artifactId>
-            <version>${alipay.version}</version>
-        </dependency>
+        <!--&lt;!&ndash;支付宝依赖&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.alipay.sdk</groupId>-->
+            <!--<artifactId>alipay-sdk-java</artifactId>-->
+            <!--<version>${alipay.version}</version>-->
+        <!--</dependency>-->
     </dependencies>
 </project>
