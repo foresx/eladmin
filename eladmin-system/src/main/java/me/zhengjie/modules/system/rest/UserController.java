@@ -24,7 +24,6 @@ import me.zhengjie.utils.SecurityUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -36,9 +35,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author Zheng Jie
@@ -74,7 +71,6 @@ public class UserController {
   @Log("导出用户数据")
   @ApiOperation("导出用户数据")
   @GetMapping(value = "/download")
-  @PreAuthorize("@el.check('user:list')")
   public void download(HttpServletResponse response, UserQueryCriteria criteria)
       throws IOException {
     userService.download(userService.queryAll(criteria), response);
@@ -83,7 +79,6 @@ public class UserController {
   @Log("查询用户")
   @ApiOperation("查询用户")
   @GetMapping
-  @PreAuthorize("@el.check('user:list')")
   public ResponseEntity getUsers(UserQueryCriteria criteria, Pageable pageable) {
     Set<Long> deptSet = new HashSet<>();
     Set<Long> result = new HashSet<>();
@@ -115,7 +110,6 @@ public class UserController {
   @Log("新增用户")
   @ApiOperation("新增用户")
   @PostMapping
-  @PreAuthorize("@el.check('user:add')")
   public ResponseEntity create(@Validated @RequestBody User resources) {
     checkLevel(resources);
     return new ResponseEntity<>(userService.create(resources), HttpStatus.CREATED);
@@ -124,7 +118,6 @@ public class UserController {
   @Log("修改用户")
   @ApiOperation("修改用户")
   @PutMapping
-  @PreAuthorize("@el.check('user:edit')")
   public ResponseEntity update(@Validated(User.Update.class) @RequestBody User resources) {
     checkLevel(resources);
     userService.update(resources);
@@ -134,7 +127,6 @@ public class UserController {
   @Log("删除用户")
   @ApiOperation("删除用户")
   @DeleteMapping(value = "/{id}")
-  @PreAuthorize("@el.check('user:del')")
   public ResponseEntity delete(@PathVariable Long id) {
     Integer currentLevel =
         Collections.min(
@@ -168,28 +160,6 @@ public class UserController {
         userDetails.getUsername(), EncryptUtils.encryptPassword(user.getNewPass()));
     return new ResponseEntity(HttpStatus.OK);
   }
-
-  @ApiOperation("修改头像")
-  @PostMapping(value = "/updateAvatar")
-  public ResponseEntity updateAvatar(@RequestParam MultipartFile file) {
-    userService.updateAvatar(file);
-    return new ResponseEntity(HttpStatus.OK);
-  }
-  //
-  //    @Log("修改邮箱")
-  //    @ApiOperation("修改邮箱")
-  //    @PostMapping(value = "/updateEmail/{code}")
-  //    public ResponseEntity updateEmail(@PathVariable String code,@RequestBody User user){
-  //        UserDetails userDetails = SecurityUtils.getUserDetails();
-  //        if(!userDetails.getPassword().equals(EncryptUtils.encryptPassword(user.getPassword()))){
-  //            throw new BadRequestException("密码错误");
-  //        }
-  //        VerificationCode verificationCode = new VerificationCode(code,
-  // ElAdminConstant.RESET_MAIL,"email",user.getEmail());
-  //        verificationCodeService.validated(verificationCode);
-  //        userService.updateEmail(userDetails.getUsername(),user.getEmail());
-  //        return new ResponseEntity(HttpStatus.OK);
-  //    }
 
   /**
    * 如果当前用户的角色级别低于创建用户的角色级别，则抛出权限不足的错误

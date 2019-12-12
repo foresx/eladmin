@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service(value = "el")
+//@Service(value = "el")
 public class ElPermissionConfig {
 
     public Boolean check(String ...permissions){

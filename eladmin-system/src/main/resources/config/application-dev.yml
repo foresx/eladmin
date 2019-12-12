@@ -1,13 +1,18 @@
 #配置数据源
 spring:
+#  flyway:
+#    locations:
+#      - classpath:db/migration
+  mvc:
+    throw-exception-if-no-handler-found: true
+    favicon:
+      enabled: false
   datasource:
+    url: jdbc:postgresql://localhost:5432/user_admin
+    username: postgres
+    password:
+    driver-class-name: org.postgresql.Driver
     druid:
-      type: com.alibaba.druid.pool.DruidDataSource
-      driverClassName: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-      url: jdbc:log4jdbc:mysql://localhost:13306/eladmin?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false
-      username: root
-      password: my-secret-pw
-
       # 初始化配置
       initial-size: 3
       # 最小连接数
@@ -37,33 +42,42 @@ spring:
 
   #配置 Jpa
   jpa:
+    open-in-view: false
     hibernate:
       # 生产环境设置成 none，避免程序运行时自动更新数据库结构
-      ddl-auto: update
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc.lob.non_contextual_creation: true
+        jdbc.time_zone: UTC
+        temp.use_jdbc_metadata_defaults: false
+  main:
+    banner-mode: "off"
 
-#jwt
-jwt:
-  header: Authorization
-  secret: mySecret
-  # token 过期时间/毫秒，6小时  1小时 = 3600000 毫秒
-  expiration: 21600000
-  # 在线用户key
-  online: online-token
-  # 验证码
-  codeKey: code-key
+
+##jwt
+#jwt:
+#  header: Authorization
+#  secret: mySecret
+#  # token 过期时间/毫秒，6小时  1小时 = 3600000 毫秒
+#  expiration: 21600000
+#  # 在线用户key
+#  online: online-token
+#  # 验证码
+#  codeKey: code-key
 
 #是否允许生成代码，生产环境设置为false
-generator:
-  enabled: true
+#generator:
+#  enabled: true
 
 #是否开启 swagger-ui
 swagger:
   enabled: true
 
 # 文件存储路径
-file:
-  path: /Users/lixianzhen/Downloads/eladmin/file
-  avatar: /Users/lixianzhen/Downloads/eladmin/avatar
-  # 文件大小 /M
-  maxSize: 100
-  avatarMaxSize: 5
+#file:
+#  path: /Users/lixianzhen/Downloads/eladmin/file
+#  avatar: /Users/lixianzhen/Downloads/eladmin/avatar
+#  # 文件大小 /M
+#  maxSize: 100
+#  avatarMaxSize: 5

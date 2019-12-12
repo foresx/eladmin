@@ -19,7 +19,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "menu")
+@Table(name = "permission")
 public class Menu implements Serializable {
 
     @Id
@@ -43,7 +43,7 @@ public class Menu implements Serializable {
     private Integer type;
 
     // 权限
-    @Column(name = "permission")
+    @Column(name = "code")
     private String permission;
 
     @Column(unique = true,name = "component_name")
@@ -51,10 +51,8 @@ public class Menu implements Serializable {
 
     private String icon;
 
-    @Column(columnDefinition = "bit(1) default 0")
     private Boolean cache;
 
-    @Column(columnDefinition = "bit(1) default 0")
     private Boolean hidden;
 
     // 上级菜单ID

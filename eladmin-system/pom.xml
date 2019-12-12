@@ -13,7 +13,8 @@
     <name>核心模块</name>
 
     <properties>
-        <jjwt.version>0.9.1</jjwt.version>
+        <flyway.version>5.2.4</flyway.version>
+        <postgresql.version>42.2.5</postgresql.version>
     </properties>
 
     <dependencies>
@@ -36,10 +37,21 @@
         </dependency>
 
         <!--jwt-->
+        <!--<dependency>-->
+            <!--<groupId>io.jsonwebtoken</groupId>-->
+            <!--<artifactId>jjwt</artifactId>-->
+            <!--<version>${jjwt.version}</version>-->
+        <!--</dependency>-->
+
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>${jjwt.version}</version>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
         </dependency>
 
         <!-- quartz -->

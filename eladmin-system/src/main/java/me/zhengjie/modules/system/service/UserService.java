@@ -27,7 +27,7 @@ public interface UserService {
 
     void updatePass(String username, String encryptPassword);
 
-    void updateAvatar(MultipartFile file);
+//    void updateAvatar(MultipartFile file);
 
     void updateEmail(String username, String email);
 
