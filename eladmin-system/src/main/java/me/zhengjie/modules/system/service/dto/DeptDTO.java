@@ -1,39 +1,40 @@
 package me.zhengjie.modules.system.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
-import lombok.Setter;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
-* @author Zheng Jie
-* @date 2019-03-25
-*/
+ * @author Zheng Jie
+ * @date 2019-03-25
+ */
 @Getter
 @Setter
 public class DeptDTO implements Serializable {
 
-    // ID
-    private Long id;
+  // ID
+  private Long id;
 
-    // 名称
-    private String name;
+  // 名称
+  private String name;
 
-    @NotNull
-    private Boolean enabled;
+  private String code;
 
-    // 上级部门
-    private Long pid;
+  @NotNull private Boolean enabled;
 
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private List<DeptDTO> children;
+  // 上级部门
+  private Long pid;
 
-    private Timestamp createTime;
+  @JsonInclude(JsonInclude.Include.NON_EMPTY)
+  private List<DeptDTO> children;
 
-    public String getLabel() {
-        return name;
-    }
+  private Timestamp createTime;
+
+  public String getLabel() {
+    return name;
+  }
 }

@@ -11,7 +11,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class ImgResult {
 
-    private String img;
+  private String img;
 
-    private String uuid;
+  private String uuid;
 }

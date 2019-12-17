@@ -79,7 +79,7 @@ ALTER table roles_depts
 ALTER table roles_depts
   ADD CONSTRAINT fk_roles_depts_dept FOREIGN KEY (dept_id) REFERENCES dept (id);
 
-CREATE TABLE "user"
+CREATE TABLE "sys_user"
 (
     id         bigserial    NOT NULL,
     username       varchar(255) NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE "user"
     email       varchar(255) NOT NULL,
     phone       varchar(255),
     enabled       boolean DEFAULT true,
-    code       varchar(50)  NOT NULL,
+--    code       varchar(50)  NOT NULL,
     last_password_reset_time timestamp,
     create_time timestamp,
 --    updated_at timestamp,
@@ -107,7 +107,7 @@ CREATE TABLE users_roles
 ALTER table users_roles
   ADD CONSTRAINT fk_users_roles_role FOREIGN KEY (role_id) REFERENCES role (id);
 ALTER table users_roles
-  ADD CONSTRAINT fk_users_roles_user FOREIGN KEY (user_id) REFERENCES "user" (id);
+  ADD CONSTRAINT fk_users_roles_user FOREIGN KEY (user_id) REFERENCES "sys_user" (id);
 
 CREATE TABLE users_depts
 (
@@ -119,7 +119,7 @@ CREATE TABLE users_depts
 ALTER table users_depts
   ADD CONSTRAINT fk_users_depts_dept FOREIGN KEY (dept_id) REFERENCES dept (id);
 ALTER table users_depts
-  ADD CONSTRAINT fk_users_depts_user FOREIGN KEY (user_id) REFERENCES "user" (id);
+  ADD CONSTRAINT fk_users_depts_user FOREIGN KEY (user_id) REFERENCES "sys_user" (id);
 
 CREATE TABLE log
 (

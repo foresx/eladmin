@@ -1,7 +1,7 @@
 package me.zhengjie.modules.system.service.dto;
 
-import lombok.Data;
 import java.io.Serializable;
+import lombok.Data;
 
 /**
  * @author Zheng Jie
@@ -10,11 +10,11 @@ import java.io.Serializable;
 @Data
 public class RoleSmallDTO implements Serializable {
 
-    private Long id;
+  private Long id;
 
-    private String name;
+  private String name;
 
-    private Integer level;
+  private Integer level;
 
-    private String dataScope;
+  private String dataScope;
 }

@@ -1,11 +1,10 @@
 package me.zhengjie.modules.system.service.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author Zheng Jie
@@ -15,33 +14,33 @@ import java.util.List;
 @Setter
 public class MenuDTO implements Serializable {
 
-    private Long id;
+  private Long id;
 
-    private Integer type;
+  private Integer type;
 
-    private String permission;
+  private String permission;
 
-    private String name;
+  private String name;
 
-    private Long sort;
+  private Long sort;
 
-    private String path;
+  private String path;
 
-    private String component;
+  private String component;
 
-    private Long pid;
+  private Long pid;
 
-    private Boolean iFrame;
+  private Boolean iFrame;
 
-    private Boolean cache;
+  private Boolean cache;
 
-    private Boolean hidden;
+  private Boolean hidden;
 
-    private String componentName;
+  private String componentName;
 
-    private String icon;
+  private String icon;
 
-    private List<MenuDTO> children;
+  private List<MenuDTO> children;
 
-    private Timestamp createTime;
+  private Timestamp createTime;
 }

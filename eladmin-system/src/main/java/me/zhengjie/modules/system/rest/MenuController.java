@@ -39,77 +39,78 @@ import org.springframework.web.bind.annotation.RestController;
 @SuppressWarnings("unchecked")
 public class MenuController {
 
-    private final MenuService menuService;
+  private final MenuService menuService;
 
-    private final UserService userService;
+  private final UserService userService;
 
-    private final RoleService roleService;
+  private final RoleService roleService;
 
-    private static final String ENTITY_NAME = "menu";
+  private static final String ENTITY_NAME = "menu";
 
-    public MenuController(MenuService menuService, UserService userService, RoleService roleService) {
-        this.menuService = menuService;
-        this.userService = userService;
-        this.roleService = roleService;
+  public MenuController(MenuService menuService, UserService userService, RoleService roleService) {
+    this.menuService = menuService;
+    this.userService = userService;
+    this.roleService = roleService;
+  }
+
+  @Log("导出菜单数据")
+  @ApiOperation("导出菜单数据")
+  @GetMapping(value = "/download")
+  public void download(HttpServletResponse response, MenuQueryCriteria criteria)
+      throws IOException {
+    menuService.download(menuService.queryAll(criteria), response);
+  }
+
+  @ApiOperation("获取前端所需菜单")
+  @GetMapping(value = "/build")
+  public ResponseEntity buildMenus() {
+    UserDTO user = userService.findByName(SecurityUtils.getUsername());
+    List<MenuDTO> menuDTOList = menuService.findByRoles(roleService.findByUsers_Id(user.getId()));
+    List<MenuDTO> menuDTOS = (List<MenuDTO>) menuService.buildTree(menuDTOList).get("content");
+    return new ResponseEntity<>(menuService.buildMenus(menuDTOS), HttpStatus.OK);
+  }
+
+  @ApiOperation("返回全部的菜单")
+  @GetMapping(value = "/tree")
+  public ResponseEntity getMenuTree() {
+    return new ResponseEntity<>(menuService.getMenuTree(menuService.findByPid(0L)), HttpStatus.OK);
+  }
+
+  @Log("查询菜单")
+  @ApiOperation("查询菜单")
+  @GetMapping
+  public ResponseEntity getMenus(MenuQueryCriteria criteria) {
+    List<MenuDTO> menuDTOList = menuService.queryAll(criteria);
+    return new ResponseEntity<>(menuService.buildTree(menuDTOList), HttpStatus.OK);
+  }
+
+  @Log("新增菜单")
+  @ApiOperation("新增菜单")
+  @PostMapping
+  public ResponseEntity create(@Validated @RequestBody Menu resources) {
+    if (resources.getId() != null) {
+      throw new BadRequestException("A new " + ENTITY_NAME + " cannot already have an ID");
     }
+    return new ResponseEntity<>(menuService.create(resources), HttpStatus.CREATED);
+  }
 
-    @Log("导出菜单数据")
-    @ApiOperation("导出菜单数据")
-    @GetMapping(value = "/download")
-    public void download(HttpServletResponse response, MenuQueryCriteria criteria) throws IOException {
-        menuService.download(menuService.queryAll(criteria), response);
-    }
+  @Log("修改菜单")
+  @ApiOperation("修改菜单")
+  @PutMapping
+  public ResponseEntity update(@Validated(Menu.Update.class) @RequestBody Menu resources) {
+    menuService.update(resources);
+    return new ResponseEntity(HttpStatus.NO_CONTENT);
+  }
 
-    @ApiOperation("获取前端所需菜单")
-    @GetMapping(value = "/build")
-    public ResponseEntity buildMenus(){
-        UserDTO user = userService.findByName(SecurityUtils.getUsername());
-        List<MenuDTO> menuDTOList = menuService.findByRoles(roleService.findByUsers_Id(user.getId()));
-        List<MenuDTO> menuDTOS = (List<MenuDTO>) menuService.buildTree(menuDTOList).get("content");
-        return new ResponseEntity<>(menuService.buildMenus(menuDTOS),HttpStatus.OK);
-    }
-
-    @ApiOperation("返回全部的菜单")
-    @GetMapping(value = "/tree")
-    public ResponseEntity getMenuTree(){
-        return new ResponseEntity<>(menuService.getMenuTree(menuService.findByPid(0L)),HttpStatus.OK);
-    }
-
-    @Log("查询菜单")
-    @ApiOperation("查询菜单")
-    @GetMapping
-    public ResponseEntity getMenus(MenuQueryCriteria criteria){
-        List<MenuDTO> menuDTOList = menuService.queryAll(criteria);
-        return new ResponseEntity<>(menuService.buildTree(menuDTOList),HttpStatus.OK);
-    }
-
-    @Log("新增菜单")
-    @ApiOperation("新增菜单")
-    @PostMapping
-    public ResponseEntity create(@Validated @RequestBody Menu resources){
-        if (resources.getId() != null) {
-            throw new BadRequestException("A new "+ ENTITY_NAME +" cannot already have an ID");
-        }
-        return new ResponseEntity<>(menuService.create(resources),HttpStatus.CREATED);
-    }
-
-    @Log("修改菜单")
-    @ApiOperation("修改菜单")
-    @PutMapping
-    public ResponseEntity update(@Validated(Menu.Update.class) @RequestBody Menu resources){
-        menuService.update(resources);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
-    }
-
-    @Log("删除菜单")
-    @ApiOperation("删除菜单")
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity delete(@PathVariable Long id){
-        List<Menu> menuList = menuService.findByPid(id);
-        Set<Menu> menuSet = new HashSet<>();
-        menuSet.add(menuService.findOne(id));
-        menuSet = menuService.getDeleteMenus(menuList, menuSet);
-        menuService.delete(menuSet);
-        return new ResponseEntity(HttpStatus.OK);
-    }
+  @Log("删除菜单")
+  @ApiOperation("删除菜单")
+  @DeleteMapping(value = "/{id}")
+  public ResponseEntity delete(@PathVariable Long id) {
+    List<Menu> menuList = menuService.findByPid(id);
+    Set<Menu> menuSet = new HashSet<>();
+    menuSet.add(menuService.findOne(id));
+    menuSet = menuService.getDeleteMenus(menuList, menuSet);
+    menuService.delete(menuSet);
+    return new ResponseEntity(HttpStatus.OK);
+  }
 }

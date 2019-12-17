@@ -16,12 +16,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class AppRun {
 
-    public static void main(String[] args) {
-        SpringApplication.run(AppRun.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(AppRun.class, args);
+  }
 
-    @Bean
-    public SpringContextHolder springContextHolder() {
-        return new SpringContextHolder();
-    }
+  @Bean
+  public SpringContextHolder springContextHolder() {
+    return new SpringContextHolder();
+  }
 }

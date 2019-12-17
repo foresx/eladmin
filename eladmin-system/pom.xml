@@ -1,81 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>eladmin</artifactId>
-        <groupId>me.zhengjie</groupId>
-        <version>2.3</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>eladmin</artifactId>
+    <groupId>me.zhengjie</groupId>
+    <version>2.3</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>eladmin-system</artifactId>
-    <name>核心模块</name>
+  <artifactId>eladmin-system</artifactId>
+  <name>核心模块</name>
 
-    <properties>
-        <flyway.version>5.2.4</flyway.version>
-        <postgresql.version>42.2.5</postgresql.version>
-    </properties>
+  <properties>
+    <flyway.version>5.2.4</flyway.version>
+    <postgresql.version>42.2.5</postgresql.version>
+  </properties>
 
-    <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>me.zhengjie</groupId>-->
-            <!--<artifactId>eladmin-generator</artifactId>-->
-            <!--<version>2.3</version>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>me.zhengjie</groupId>-->
-                    <!--<artifactId>eladmin-common</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
-        <!--</dependency>-->
+  <dependencies>
+    <!--<dependency>-->
+    <!--<groupId>me.zhengjie</groupId>-->
+    <!--<artifactId>eladmin-common</artifactId>-->
+    <!--<version>2.3</version>-->
+    <!--</dependency>-->
+    <dependency>
+      <groupId>me.zhengjie</groupId>
+      <artifactId>eladmin-logging</artifactId>
+      <version>2.3</version>
+    </dependency>
 
-        <dependency>
-            <groupId>me.zhengjie</groupId>
-            <artifactId>eladmin-tools</artifactId>
-            <version>2.3</version>
-        </dependency>
+    <!--jwt-->
+    <!--<dependency>-->
+    <!--<groupId>io.jsonwebtoken</groupId>-->
+    <!--<artifactId>jjwt</artifactId>-->
+    <!--<version>${jjwt.version}</version>-->
+    <!--</dependency>-->
 
-        <!--jwt-->
-        <!--<dependency>-->
-            <!--<groupId>io.jsonwebtoken</groupId>-->
-            <!--<artifactId>jjwt</artifactId>-->
-            <!--<version>${jjwt.version}</version>-->
-        <!--</dependency>-->
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-core</artifactId>
+      <version>${flyway.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${postgresql.version}</version>
+    </dependency>
 
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>${flyway.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
-        </dependency>
+    <dependency>
+      <groupId>com.github.ory</groupId>
+      <artifactId>hydra-client-resttemplate</artifactId>
+      <version>1.0.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>io.swagger</groupId>
+          <artifactId>swagger-annotations</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!-- quartz -->
+    <!--<dependency>-->
+    <!--<groupId>org.quartz-scheduler</groupId>-->
+    <!--<artifactId>quartz</artifactId>-->
+    <!--</dependency>-->
 
-        <!-- quartz -->
-        <!--<dependency>-->
-            <!--<groupId>org.quartz-scheduler</groupId>-->
-            <!--<artifactId>quartz</artifactId>-->
-        <!--</dependency>-->
+  </dependencies>
 
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <!-- 跳过单元测试 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <skipTests>true</skipTests>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <!-- 跳过单元测试 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skipTests>true</skipTests>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

@@ -1,15 +1,14 @@
 package me.zhengjie.modules.system.service;
 
-import me.zhengjie.modules.system.domain.Menu;
-import me.zhengjie.modules.system.service.dto.MenuDTO;
-import me.zhengjie.modules.system.service.dto.MenuQueryCriteria;
-import me.zhengjie.modules.system.service.dto.RoleSmallDTO;
-
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.servlet.http.HttpServletResponse;
+import me.zhengjie.modules.system.domain.Menu;
+import me.zhengjie.modules.system.service.dto.MenuDTO;
+import me.zhengjie.modules.system.service.dto.MenuQueryCriteria;
+import me.zhengjie.modules.system.service.dto.RoleSmallDTO;
 
 /**
  * @author Zheng Jie
@@ -17,29 +16,29 @@ import java.util.Set;
  */
 public interface MenuService {
 
-    List<MenuDTO> queryAll(MenuQueryCriteria criteria);
+  List<MenuDTO> queryAll(MenuQueryCriteria criteria);
 
-    MenuDTO findById(long id);
+  MenuDTO findById(long id);
 
-    MenuDTO create(Menu resources);
+  MenuDTO create(Menu resources);
 
-    void update(Menu resources);
+  void update(Menu resources);
 
-    Set<Menu> getDeleteMenus(List<Menu> menuList, Set<Menu> menuSet);
+  Set<Menu> getDeleteMenus(List<Menu> menuList, Set<Menu> menuSet);
 
-    Object getMenuTree(List<Menu> menus);
+  Object getMenuTree(List<Menu> menus);
 
-    List<Menu> findByPid(long pid);
+  List<Menu> findByPid(long pid);
 
-    Map<String,Object> buildTree(List<MenuDTO> menuDTOS);
+  Map<String, Object> buildTree(List<MenuDTO> menuDTOS);
 
-    List<MenuDTO> findByRoles(List<RoleSmallDTO> roles);
+  List<MenuDTO> findByRoles(List<RoleSmallDTO> roles);
 
-    Object buildMenus(List<MenuDTO> byRoles);
+  Object buildMenus(List<MenuDTO> byRoles);
 
-    Menu findOne(Long id);
+  Menu findOne(Long id);
 
-    void delete(Set<Menu> menuSet);
+  void delete(Set<Menu> menuSet);
 
-    void download(List<MenuDTO> queryAll, HttpServletResponse response) throws IOException;
+  void download(List<MenuDTO> queryAll, HttpServletResponse response) throws IOException;
 }

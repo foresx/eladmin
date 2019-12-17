@@ -1,9 +1,8 @@
 package me.zhengjie.modules.security.security;
 
+import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.validation.constraints.NotBlank;
 
 /**
  * @author Zheng Jie
@@ -13,18 +12,16 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class AuthUser {
 
-    @NotBlank
-    private String username;
+  @NotBlank private String username;
 
-    @NotBlank
-    private String password;
+  @NotBlank private String password;
 
-    private String code;
+  private String code;
 
-    private String uuid = "";
+  private String uuid = "";
 
-    @Override
-    public String toString() {
-        return "{username=" + username  + ", password= ******}";
-    }
+  @Override
+  public String toString() {
+    return "{username=" + username + ", password= ******}";
+  }
 }

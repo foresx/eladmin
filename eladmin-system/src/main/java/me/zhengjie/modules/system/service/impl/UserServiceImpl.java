@@ -22,7 +22,6 @@ import me.zhengjie.utils.FileUtil;
 import me.zhengjie.utils.PageUtil;
 import me.zhengjie.utils.QueryHelp;
 import me.zhengjie.utils.ValidationUtil;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -47,14 +46,11 @@ public class UserServiceImpl implements UserService {
 
   private final RedisService redisService;
 
-
-  @Value("${file.avatar}")
-  private String avatar;
+  //  @Value("${file.avatar}")
+  //  private String avatar;
 
   public UserServiceImpl(
-      UserRepository userRepository,
-      UserMapper userMapper,
-      RedisService redisService) {
+      UserRepository userRepository, UserMapper userMapper, RedisService redisService) {
     this.userRepository = userRepository;
     this.userMapper = userMapper;
     this.redisService = redisService;
@@ -63,6 +59,7 @@ public class UserServiceImpl implements UserService {
   @Override
   @Cacheable
   public Object queryAll(UserQueryCriteria criteria, Pageable pageable) {
+    //    Page<User> page = userRepository.findAll(pageable);
     Page<User> page =
         userRepository.findAll(
             (root, criteriaQuery, criteriaBuilder) ->
@@ -171,27 +168,6 @@ public class UserServiceImpl implements UserService {
     userRepository.updatePass(username, pass, new Date());
   }
 
-  //    @Override
-  //    @CacheEvict(allEntries = true)
-  //    @Transactional(rollbackFor = Exception.class)
-  //    public void updateAvatar(MultipartFile multipartFile) {
-  //        User user = userRepository.findByUsername(SecurityUtils.getUsername());
-  //        UserAvatar userAvatar = user.getUserAvatar();
-  //        String oldPath = "";
-  //        if(userAvatar != null){
-  //           oldPath = userAvatar.getPath();
-  //        }
-  //        File file = FileUtil.upload(multipartFile, avatar);
-  //        assert file != null;
-  //        userAvatar = userAvatarRepository.save(new UserAvatar(userAvatar,file.getName(),
-  // file.getPath(), FileUtil.getSize(multipartFile.getSize())));
-  //        user.setUserAvatar(userAvatar);
-  //        userRepository.save(user);
-  //        if(StringUtils.isNotBlank(oldPath)){
-  //            FileUtil.del(oldPath);
-  //        }
-  //    }
-
   @Override
   @CacheEvict(allEntries = true)
   @Transactional(rollbackFor = Exception.class)
@@ -207,13 +183,12 @@ public class UserServiceImpl implements UserService {
           userDTO.getRoles().stream().map(RoleSmallDTO::getName).collect(Collectors.toList());
       Map<String, Object> map = new LinkedHashMap<>();
       map.put("用户名", userDTO.getUsername());
-      map.put("头像", userDTO.getAvatar());
       map.put("邮箱", userDTO.getEmail());
       map.put("状态", userDTO.getEnabled() ? "启用" : "禁用");
       map.put("手机号码", userDTO.getPhone());
       map.put("角色", roles);
-      map.put("部门", userDTO.getDept().getName());
-      map.put("岗位", userDTO.getJob().getName());
+      //      map.put("部门", userDTO.getDept().getName());
+      //      map.put("岗位", userDTO.getJob().getName());
       map.put("最后修改密码的时间", userDTO.getLastPasswordResetTime());
       map.put("创建日期", userDTO.getCreateTime());
       list.add(map);

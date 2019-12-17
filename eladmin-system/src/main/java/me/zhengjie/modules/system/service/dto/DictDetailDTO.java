@@ -1,26 +1,25 @@
 package me.zhengjie.modules.system.service.dto;
 
+import java.io.Serializable;
+import java.sql.Timestamp;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-
 /**
-* @author Zheng Jie
-* @date 2019-04-10
-*/
+ * @author Zheng Jie
+ * @date 2019-04-10
+ */
 @Getter
 @Setter
 public class DictDetailDTO implements Serializable {
 
-    private Long id;
+  private Long id;
 
-    private String label;
+  private String label;
 
-    private String value;
+  private String value;
 
-    private String sort;
+  private String sort;
 
-    private Timestamp createTime;
+  private Timestamp createTime;
 }

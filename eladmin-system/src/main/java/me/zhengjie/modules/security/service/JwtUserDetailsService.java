@@ -1,11 +1,8 @@
 package me.zhengjie.modules.security.service;
 
-import java.util.Optional;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.modules.security.security.JwtUser;
 import me.zhengjie.modules.system.service.UserService;
-import me.zhengjie.modules.system.service.dto.DeptSmallDTO;
-import me.zhengjie.modules.system.service.dto.JobSmallDTO;
 import me.zhengjie.modules.system.service.dto.UserDTO;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class JwtUserDetailsService implements UserDetailsService {
 
   private final UserService userService;
-
 
   public JwtUserDetailsService(UserService userService) {
     this.userService = userService;
@@ -44,11 +40,13 @@ public class JwtUserDetailsService implements UserDetailsService {
         user.getId(),
         user.getUsername(),
         user.getPassword(),
-        user.getAvatar(),
+        null,
         user.getEmail(),
         user.getPhone(),
-        Optional.ofNullable(user.getDept()).map(DeptSmallDTO::getName).orElse(null),
-        Optional.ofNullable(user.getJob()).map(JobSmallDTO::getName).orElse(null),
+        null,
+        //        Optional.ofNullable(user.getDept()).map(DeptSmallDTO::getName).orElse(null),
+        // todo delete job
+        null,
         //                permissionService.mapToGrantedAuthorities(user),
         // todo 应该改成应该有的权限
         null,

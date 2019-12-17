@@ -4,8 +4,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 import me.zhengjie.aop.log.Log;
@@ -19,14 +17,11 @@ import me.zhengjie.modules.system.service.UserService;
 import me.zhengjie.modules.system.service.dto.RoleSmallDTO;
 import me.zhengjie.modules.system.service.dto.UserQueryCriteria;
 import me.zhengjie.utils.EncryptUtils;
-import me.zhengjie.utils.PageUtil;
 import me.zhengjie.utils.SecurityUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -80,38 +75,42 @@ public class UserController {
   @ApiOperation("查询用户")
   @GetMapping
   public ResponseEntity getUsers(UserQueryCriteria criteria, Pageable pageable) {
-    Set<Long> deptSet = new HashSet<>();
-    Set<Long> result = new HashSet<>();
-    if (!ObjectUtils.isEmpty(criteria.getDeptId())) {
-      deptSet.add(criteria.getDeptId());
-      deptSet.addAll(dataScope.getDeptChildren(deptService.findByPid(criteria.getDeptId())));
-    }
-    // 数据权限
-    Set<Long> deptIds = dataScope.getDeptIds();
-    // 查询条件不为空并且数据权限不为空则取交集
-    if (!CollectionUtils.isEmpty(deptIds) && !CollectionUtils.isEmpty(deptSet)) {
-      // 取交集
-      result.addAll(deptSet);
-      result.retainAll(deptIds);
-      // 若无交集，则代表无数据权限
-      criteria.setDeptIds(result);
-      if (result.size() == 0) {
-        return new ResponseEntity<>(PageUtil.toPage(null, 0), HttpStatus.OK);
-      } else return new ResponseEntity<>(userService.queryAll(criteria, pageable), HttpStatus.OK);
-      // 否则取并集
-    } else {
-      result.addAll(deptSet);
-      result.addAll(deptIds);
-      criteria.setDeptIds(result);
-      return new ResponseEntity<>(userService.queryAll(criteria, pageable), HttpStatus.OK);
-    }
+    //    Set<Long> deptSet = new HashSet<>();
+    //    Set<Long> result = new HashSet<>();
+    ////    if (!ObjectUtils.isEmpty(criteria.getDeptId())) {
+    ////      deptSet.add(criteria.getDeptId());
+    ////
+    // deptSet.addAll(dataScope.getDeptChildren(deptService.findByPid(criteria.getDeptId())));
+    ////    }
+    //    // 数据权限
+    ////    Set<Long> deptIds = dataScope.getDeptIds();
+    //    // 查询条件不为空并且数据权限不为空则取交集
+    //    if (
+    ////        !CollectionUtils.isEmpty(deptIds) &&
+    //            !CollectionUtils.isEmpty(deptSet)) {
+    //      // 取交集
+    //      result.addAll(deptSet);
+    ////      result.retainAll(deptIds);
+    //      // 若无交集，则代表无数据权限
+    //      criteria.setDeptIds(result);
+    //      if (result.size() == 0) {
+    //        return new ResponseEntity<>(PageUtil.toPage(null, 0), HttpStatus.OK);
+    //      } else return new ResponseEntity<>(userService.queryAll(criteria, pageable),
+    // HttpStatus.OK);
+    //      // 否则取并集
+    //    } else {
+    //      result.addAll(deptSet);
+    ////      result.addAll(deptIds);
+    ////      criteria.setDeptIds(result);
+    //    }
+    return new ResponseEntity<>(userService.queryAll(criteria, pageable), HttpStatus.OK);
   }
 
   @Log("新增用户")
   @ApiOperation("新增用户")
   @PostMapping
   public ResponseEntity create(@Validated @RequestBody User resources) {
-    checkLevel(resources);
+    //    checkLevel(resources);
     return new ResponseEntity<>(userService.create(resources), HttpStatus.CREATED);
   }
 
@@ -119,7 +118,7 @@ public class UserController {
   @ApiOperation("修改用户")
   @PutMapping
   public ResponseEntity update(@Validated(User.Update.class) @RequestBody User resources) {
-    checkLevel(resources);
+    //    checkLevel(resources);
     userService.update(resources);
     return new ResponseEntity(HttpStatus.NO_CONTENT);
   }
@@ -128,20 +127,20 @@ public class UserController {
   @ApiOperation("删除用户")
   @DeleteMapping(value = "/{id}")
   public ResponseEntity delete(@PathVariable Long id) {
-    Integer currentLevel =
-        Collections.min(
-            roleService.findByUsers_Id(SecurityUtils.getUserId()).stream()
-                .map(RoleSmallDTO::getLevel)
-                .collect(Collectors.toList()));
-    Integer optLevel =
-        Collections.min(
-            roleService.findByUsers_Id(id).stream()
-                .map(RoleSmallDTO::getLevel)
-                .collect(Collectors.toList()));
-
-    if (currentLevel > optLevel) {
-      throw new BadRequestException("角色权限不足");
-    }
+    //    Integer currentLevel =
+    //        Collections.min(
+    //            roleService.findByUsers_Id(SecurityUtils.getUserId()).stream()
+    //                .map(RoleSmallDTO::getLevel)
+    //                .collect(Collectors.toList()));
+    //    Integer optLevel =
+    //        Collections.min(
+    //            roleService.findByUsers_Id(id).stream()
+    //                .map(RoleSmallDTO::getLevel)
+    //                .collect(Collectors.toList()));
+    //
+    //    if (currentLevel > optLevel) {
+    //      throw new BadRequestException("角色权限不足");
+    //    }
     userService.delete(id);
     return new ResponseEntity(HttpStatus.OK);
   }

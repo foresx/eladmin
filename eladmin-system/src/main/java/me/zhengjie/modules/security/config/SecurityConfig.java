@@ -3,11 +3,9 @@ package me.zhengjie.modules.security.config;
 import java.util.Map;
 import me.zhengjie.modules.security.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -36,8 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   // 自定义基于JWT的安全过滤器
   //    private final JwtAuthorizationTokenFilter authenticationTokenFilter;
 
-  @Value("${jwt.header}")
-  private String tokenHeader;
+  //  @Value("${jwt.header}")
+  //  private String tokenHeader;
 
   public SecurityConfig(
       JwtUserDetailsService jwtUserDetailsService, ApplicationContext applicationContext) {
@@ -83,21 +81,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
-        // 过滤请求
         .authorizeRequests()
-        .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js")
-        .anonymous()
         .antMatchers("/")
-        .permitAll()
-        // swagger start
-        .antMatchers("/swagger-ui.html")
-        .permitAll()
-        .antMatchers("/swagger-resources/**")
-        .permitAll()
-        .antMatchers("/webjars/**")
-        .permitAll()
-        .antMatchers("/*/api-docs")
         .permitAll();
+
+    //        // 过滤请求
+    //        .authorizeRequests()
+    //        .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js")
+    //        .anonymous()
+    //        .antMatchers("/")
+    //        .permitAll()
+    //        // swagger start
+    //        .antMatchers("/swagger-ui.html")
+    //        .permitAll()
+    //        .antMatchers("/swagger-resources/**")
+    //        .permitAll()
+    //        .antMatchers("/webjars/**")
+    //        .permitAll()
+    //        .antMatchers("/*/api-docs")
+    //        .permitAll();
     // swagger end
     // 文件
     //                .antMatchers("/avatar/**").permitAll()

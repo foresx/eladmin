@@ -1,8 +1,8 @@
 #配置数据源
 spring:
-#  flyway:
-#    locations:
-#      - classpath:db/migration
+  #  flyway:
+  #    locations:
+  #      - classpath:db/migration
   mvc:
     throw-exception-if-no-handler-found: true
     favicon:
@@ -50,7 +50,6 @@ spring:
       hibernate:
         jdbc.lob.non_contextual_creation: true
         jdbc.time_zone: UTC
-        temp.use_jdbc_metadata_defaults: false
   main:
     banner-mode: "off"
 
@@ -80,4 +79,5 @@ swagger:
 #  avatar: /Users/lixianzhen/Downloads/eladmin/avatar
 #  # 文件大小 /M
 #  maxSize: 100
+debug: true
 #  avatarMaxSize: 5

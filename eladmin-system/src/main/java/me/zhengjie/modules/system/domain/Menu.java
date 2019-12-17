@@ -1,16 +1,23 @@
 package me.zhengjie.modules.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 /**
  * @author Zheng Jie
@@ -22,67 +29,66 @@ import java.util.Set;
 @Table(name = "permission")
 public class Menu implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull(groups = {Update.class})
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @NotNull(groups = {Update.class})
+  private Long id;
 
-    @NotBlank
-    private String name;
+  @NotBlank private String name;
 
-    @Column(unique = true)
-    private Long sort = 999L;
+  @Column(unique = true)
+  private Long sort = 999L;
 
-    @Column(name = "path")
-    private String path;
+  @Column(name = "path")
+  private String path;
 
-    private String component;
+  private String component;
 
-    // 类型
-    @Column(name = "type")
-    private Integer type;
+  // 类型
+  @Column(name = "type")
+  private Integer type;
 
-    // 权限
-    @Column(name = "code")
-    private String permission;
+  // 权限
+  @Column(name = "code")
+  private String permission;
 
-    @Column(unique = true,name = "component_name")
-    private String componentName;
+  @Column(unique = true, name = "component_name")
+  private String componentName;
 
-    private String icon;
+  private String icon;
 
-    private Boolean cache;
+  private Boolean cache;
 
-    private Boolean hidden;
+  private Boolean hidden;
 
-    // 上级菜单ID
-    @Column(name = "pid",nullable = false)
-    private Long pid;
+  // 上级菜单ID
+  @Column(name = "pid", nullable = false)
+  private Long pid;
 
-    // 是否为外链 true/false
-    @Column(name = "i_frame")
-    private Boolean iFrame;
+  // 是否为外链 true/false
+  @Column(name = "i_frame")
+  private Boolean iFrame;
 
-    @ManyToMany(mappedBy = "menus")
-    @JsonIgnore
-    private Set<Role> roles;
+  @ManyToMany(mappedBy = "menus", fetch = FetchType.EAGER)
+  @JsonIgnore
+  private Set<Role> roles;
 
-    @Column(name = "create_time")
-    @CreationTimestamp
-    private Timestamp createTime;
+  @Column(name = "create_time")
+  @CreationTimestamp
+  private Timestamp createTime;
 
-    public @interface Update {}
+  public @interface Update {}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Menu menu = (Menu) o;
-        return Objects.equals(id, menu.id);
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Menu menu = (Menu) o;
+    return Objects.equals(id, menu.id);
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
+  }
 }

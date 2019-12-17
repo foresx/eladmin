@@ -25,39 +25,39 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "系统：Redis缓存管理")
 public class RedisController {
 
-    private final RedisService redisService;
+  private final RedisService redisService;
 
-    public RedisController(RedisService redisService) {
-        this.redisService = redisService;
-    }
+  public RedisController(RedisService redisService) {
+    this.redisService = redisService;
+  }
 
-    @Log("查询Redis缓存")
-    @GetMapping
-    @ApiOperation("查询Redis缓存")
-    public ResponseEntity getRedis(String key, Pageable pageable){
-        return new ResponseEntity<>(redisService.findByKey(key,pageable), HttpStatus.OK);
-    }
+  @Log("查询Redis缓存")
+  @GetMapping
+  @ApiOperation("查询Redis缓存")
+  public ResponseEntity getRedis(String key, Pageable pageable) {
+    return new ResponseEntity<>(redisService.findByKey(key, pageable), HttpStatus.OK);
+  }
 
-    @Log("导出数据")
-    @ApiOperation("导出数据")
-    @GetMapping(value = "/download")
-    public void download(HttpServletResponse response, String key) throws IOException {
-        redisService.download(redisService.findByKey(key), response);
-    }
+  @Log("导出数据")
+  @ApiOperation("导出数据")
+  @GetMapping(value = "/download")
+  public void download(HttpServletResponse response, String key) throws IOException {
+    redisService.download(redisService.findByKey(key), response);
+  }
 
-    @Log("删除Redis缓存")
-    @DeleteMapping
-    @ApiOperation("删除Redis缓存")
-    public ResponseEntity delete(@RequestBody RedisVo resources){
-        redisService.delete(resources.getKey());
-        return new ResponseEntity(HttpStatus.OK);
-    }
+  @Log("删除Redis缓存")
+  @DeleteMapping
+  @ApiOperation("删除Redis缓存")
+  public ResponseEntity delete(@RequestBody RedisVo resources) {
+    redisService.delete(resources.getKey());
+    return new ResponseEntity(HttpStatus.OK);
+  }
 
-    @Log("清空Redis缓存")
-    @DeleteMapping(value = "/all")
-    @ApiOperation("清空Redis缓存")
-    public ResponseEntity deleteAll(){
-        redisService.deleteAll();
-        return new ResponseEntity(HttpStatus.OK);
-    }
+  @Log("清空Redis缓存")
+  @DeleteMapping(value = "/all")
+  @ApiOperation("清空Redis缓存")
+  public ResponseEntity deleteAll() {
+    redisService.deleteAll();
+    return new ResponseEntity(HttpStatus.OK);
+  }
 }

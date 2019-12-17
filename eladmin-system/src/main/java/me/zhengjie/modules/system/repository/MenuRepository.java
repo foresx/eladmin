@@ -1,10 +1,10 @@
 package me.zhengjie.modules.system.repository;
 
+import java.util.LinkedHashSet;
+import java.util.List;
 import me.zhengjie.modules.system.domain.Menu;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import java.util.LinkedHashSet;
-import java.util.List;
 
 /**
  * @author Zheng Jie
@@ -12,11 +12,11 @@ import java.util.List;
  */
 public interface MenuRepository extends JpaRepository<Menu, Long>, JpaSpecificationExecutor<Menu> {
 
-    Menu findByName(String name);
+  Menu findByName(String name);
 
-    Menu findByComponentName(String name);
+  Menu findByComponentName(String name);
 
-    List<Menu> findByPid(long pid);
+  List<Menu> findByPid(long pid);
 
-    LinkedHashSet<Menu> findByRoles_IdAndTypeIsNotInOrderBySortAsc(Long id, Integer type);
+  LinkedHashSet<Menu> findByRolesIdAndTypeIsNotOrderBySortAsc(Long id, Integer type);
 }

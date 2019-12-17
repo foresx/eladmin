@@ -1,11 +1,10 @@
 package me.zhengjie.modules.system.service.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author Zheng Jie
@@ -15,21 +14,23 @@ import java.util.Set;
 @Setter
 public class RoleDTO implements Serializable {
 
-    private Long id;
+  private Long id;
 
-    private String name;
+  private String name;
 
-    private String dataScope;
+  private String dataScope;
 
-    private Integer level;
+  private Integer level;
 
-    private String remark;
+  private String remark;
 
-    private String permission;
+  private String code;
 
-    private Set<MenuDTO> menus;
+  private String permission;
 
-    private Set<DeptDTO> depts;
+  private Set<MenuDTO> menus;
 
-    private Timestamp createTime;
+  private Set<DeptDTO> depts;
+
+  private Timestamp createTime;
 }

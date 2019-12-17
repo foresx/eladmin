@@ -1,35 +1,36 @@
 package me.zhengjie.modules.system.service;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Set;
+import javax.servlet.http.HttpServletResponse;
 import me.zhengjie.modules.system.domain.Dept;
 import me.zhengjie.modules.system.service.dto.DeptDTO;
 import me.zhengjie.modules.system.service.dto.DeptQueryCriteria;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
-import java.util.Set;
-
 /**
-* @author Zheng Jie
-* @date 2019-03-25
-*/
+ * @author Zheng Jie
+ * @date 2019-03-25
+ */
 public interface DeptService {
 
-    List<DeptDTO> queryAll(DeptQueryCriteria criteria);
+  List<DeptDTO> queryAll(DeptQueryCriteria criteria);
 
-    DeptDTO findById(Long id);
+  List<DeptDTO> queryAll();
 
-    DeptDTO create(Dept resources);
+  DeptDTO findById(Long id);
 
-    void update(Dept resources);
+  DeptDTO create(Dept resources);
 
-    void delete(Long id);
+  void update(Dept resources);
 
-    Object buildTree(List<DeptDTO> deptDTOS);
+  void delete(Long id);
 
-    List<Dept> findByPid(long pid);
+  Object buildTree(List<DeptDTO> deptDTOS);
 
-    Set<Dept> findByRoleIds(Long id);
+  List<Dept> findByPid(long pid);
 
-    void download(List<DeptDTO> queryAll, HttpServletResponse response) throws IOException;
+  Set<Dept> findByRoleIds(Long id);
+
+  void download(List<DeptDTO> queryAll, HttpServletResponse response) throws IOException;
 }
