@@ -4,15 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>me.zhengjie</groupId>
-    <artifactId>eladmin</artifactId>
+    <groupId>castlery</groupId>
+    <artifactId>user-manager</artifactId>
     <packaging>pom</packaging>
-    <version>2.3</version>
+    <version>1.0.0</version>
 
     <modules>
-        <module>eladmin-common</module>
-        <module>eladmin-logging</module>
-        <module>eladmin-system</module>
+        <module>ums-common</module>
+        <module>ums-logging</module>
+        <module>ums</module>
     </modules>
 
     <parent>

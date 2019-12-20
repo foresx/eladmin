@@ -1,0 +1,84 @@
+#!/usr/bin/env groovy
+
+properties([
+  buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '30', numToKeepStr: '')),
+  disableConcurrentBuilds(),
+  [$class: 'hudson.model.ParametersDefinitionProperty', parameterDefinitions: [
+    [$class: 'hudson.model.ChoiceParameterDefinition', choices: 'dev\ntest\nprod', description: 'Deployment environment', name : 'DEPLOY_ENV'],
+    [$class: 'StringParameterDefinition', defaultValue: '', description: 'Docker image version', name: 'DEPLOY_VERSION']
+  ]],
+])
+
+node {
+  catchError {
+    env.APPLICATION_NAME = "ums-deploy"
+    env.ECR_REGISTRY = "825303761615.dkr.ecr.ap-southeast-1.amazonaws.com"
+    env.KEEPER_VERSION = "latest"
+
+    stage("Pull keeper image") {
+      withCredentials([string(credentialsId: 'app_keeper_aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
+                        string(credentialsId: 'app_keeper_aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+        sh '''
+        docker pull "${ECR_REGISTRY}/keeper:${KEEPER_VERSION}"
+        '''
+      }
+    }
+
+    stage("Pull application image") {
+      withCredentials([string(credentialsId: 'app_keeper_aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
+                        string(credentialsId: 'app_keeper_aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+        sh '''
+        docker pull "${ECR_REGISTRY}/${APPLICATION_NAME}:${DEPLOY_ENV}_${DEPLOY_VERSION}"
+        '''
+      }
+    }
+
+    echo "Using docker image keeper:${KEEPER_VERSION}"
+    keeperImage = docker.image("${ECR_REGISTRY}/keeper:${KEEPER_VERSION}")
+    appImage = docker.image("${ECR_REGISTRY}/${APPLICATION_NAME}:${DEPLOY_ENV}_${DEPLOY_VERSION}")
+    echo "Running deployment for ${APPLICATION_NAME} version: ${params.DEPLOY_VERSION} in environment: ${params.DEPLOY_ENV}"
+
+    stage('Extract deployment script'){
+      appImage.inside('--entrypoint ""') {
+          sh '''
+            set +x
+            rm -rf ./deploy/
+            cp -r /app/deploy/ ./deploy/
+          '''
+      }
+    }
+    stage('Run deployment script'){
+      withCredentials([string(credentialsId: 'app_keeper_aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
+                              string(credentialsId: 'app_keeper_aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+        keeperImage.inside("-v /etc/passwd:/etc/passwd:ro -u 0:0") {
+            sh '''
+              set +x
+              set -a
+              ./deploy/deploy.sh ${DEPLOY_ENV} ${DEPLOY_VERSION}
+            '''
+        }
+      }
+    }
+  }
+  notifyBuild(currentBuild.result)
+}
+
+def notifyBuild(String buildStatus = 'STARTED') {
+  // build status of null means successful
+  buildStatus = buildStatus ?: 'SUCCESS'
+
+  // Default values
+  def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+  def summary = """- Job     : ${env.JOB_NAME}""".stripMargin()
+
+  def recipient = "team.tech@castlery.com"
+  mail (subject: subject,
+          body: """Job: ${env.JOB_NAME}
+                  |Build: ${env.BUILD_NUMBER}
+                  |Status: ${buildStatus}
+                  |Build URL: ${env.BUILD_URL}
+                """.stripMargin(),
+            to: recipient,
+       replyTo: recipient,
+          from: 'Jenkins <jenkins.noreply@castlery.com>')
+}
