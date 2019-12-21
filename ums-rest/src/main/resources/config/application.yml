@@ -1,55 +1,74 @@
 server:
-  port: 8000
+  host: localhost
+  port: ${PORT:8080}
+  error:
+    whitelabel:
+      enabled: false
+
+spring.application:
+  name: ums-rest
+
+spring.mvc:
+  throw-exception-if-no-handler-found: true
+  favicon:
+    enabled: false
+
+spring.jpa:
+  open-in-view: false
+  database:
+  properties:
+    hibernate:
+      jdbc.lob.non_contextual_creation: true
+      jdbc.time_zone: UTC
+      temp.use_jdbc_metadata_defaults: false
+  #      show_sql: true
+  #      format_sql: true
+  hibernate:
+    ddl-auto: validate
 
 spring:
-  profiles:
-    active: dev
+  datasource:
+    url:
+    username:
+    password:
+    driver-class-name: org.postgresql.Driver
+    druid:
+      # 初始化配置
+      initial-size: 3
+      # 最小连接数
+      min-idle: 3
+      # 最大连接数
+      max-active: 15
+      # 获取连接超时时间
+      max-wait: 5000
+      # 连接有效性检测时间
+      time-between-eviction-runs-millis: 90000
+      # 最大空闲时间
+      min-evictable-idle-time-millis: 1800000
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+
+      validation-query: select 1
+
+  main:
+    banner-mode: "off"
   jackson:
     time-zone: GMT+8
   data:
     redis:
       repositories:
         enabled: false
-
-  #配置 Jpa
-  #  jpa:
-  #    properties:
-  #      hibernate:
-  #        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-  #    open-in-view: true
-
   redis:
     #数据库索引
-    database: 0
-    host: 127.0.0.1
+    database:
+    host:
     port: 6379
-    password:
     #连接超时时间
     timeout: 5000
-
-#task:
-#  pool:
-#    # 核心线程池大小
-#    core-pool-size: 10
-#    # 最大线程数
-#    max-pool-size: 30
-#    # 活跃时间
-#    keep-alive-seconds: 60
-#    # 队列容量
-#    queue-capacity: 50
-
-#七牛云
-#qiniu:
-#  # 文件大小 /M
-#  max-size: 15
-
-##邮箱验证码有效时间/分钟
-#code:
-#  expiration: 5
 
 swagger:
   enabled: true
 
-#登录图形验证码有效时间/分钟
 loginCode:
   expiration: 2

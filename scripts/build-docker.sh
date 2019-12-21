@@ -29,7 +29,7 @@ docker build -t $APP_NAME:${APP_ENV}_${IMAGE_TAG} \
 
 
 # build oms-graphql image
-APP_NAME=ums
+APP_NAME=ums-rest
 echo "Building image for ${APP_NAME}"
 MODULE_DIR=${PROJ_DIR}/${APP_NAME}
 docker build -t $APP_NAME:${APP_ENV}_${IMAGE_TAG} \
