@@ -135,6 +135,7 @@ public class QueryHelp {
                   cb.like(
                       getExpression(attributeName, join, root).as(String.class),
                       val.toString() + "%"));
+              break;
             case IN:
               if (CollUtil.isNotEmpty((Collection<Long>) val)) {
                 list.add(getExpression(attributeName, join, root).in((Collection<Long>) val));

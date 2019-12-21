@@ -22,6 +22,7 @@ import me.zhengjie.utils.QueryHelp;
 import me.zhengjie.utils.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -35,19 +36,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class LogServiceImpl implements LogService {
+  @Autowired private LogRepository logRepository;
+  @Autowired private LogErrorMapper logErrorMapper;
+  @Autowired private LogSmallMapper logSmallMapper;
 
-  private final LogRepository logRepository;
-
-  private final LogErrorMapper logErrorMapper;
-
-  private final LogSmallMapper logSmallMapper;
-
-  public LogServiceImpl(
-      LogRepository logRepository, LogErrorMapper logErrorMapper, LogSmallMapper logSmallMapper) {
-    this.logRepository = logRepository;
-    this.logErrorMapper = logErrorMapper;
-    this.logSmallMapper = logSmallMapper;
-  }
+  //  public LogServiceImpl(
+  //      LogRepository logRepository, LogErrorMapper logErrorMapper, LogSmallMapper logSmallMapper)
+  // {
+  //    this.logRepository = logRepository;
+  //    this.logErrorMapper = logErrorMapper;
+  //    this.logSmallMapper = logSmallMapper;
+  //  }
 
   @Override
   public Object queryAll(LogQueryCriteria criteria, Pageable pageable) {
@@ -104,8 +103,8 @@ public class LogServiceImpl implements LogService {
     assert log != null;
     log.setRequestIp(ip);
 
-    String LOGINPATH = "login";
-    if (LOGINPATH.equals(signature.getName())) {
+    String loginPath = "login";
+    if (loginPath.equals(signature.getName())) {
       try {
         assert argValues != null;
         username = new JSONObject(argValues[0]).get("username").toString();

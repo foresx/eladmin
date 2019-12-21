@@ -16,7 +16,8 @@ import org.springframework.util.DigestUtils;
  */
 public class EncryptUtils {
 
-  private static String strKey = "Passw0rd", strParam = "Passw0rd";
+  private static String strKey = "Passw0rd";
+  private static String strParam = "Passw0rd";
 
   /** 对称加密 */
   public static String desEncrypt(String source) throws Exception {

@@ -11,7 +11,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-/** @author Zheng Jie @Date 2019年10月24日20:46:32 */
 @Getter
 @Setter
 @MappedSuperclass

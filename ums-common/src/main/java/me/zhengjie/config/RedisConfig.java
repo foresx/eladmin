@@ -138,12 +138,6 @@ public class RedisConfig extends CachingConfigurerSupport {
   }
 }
 
-/**
- * Value 序列化
- *
- * @author /
- * @param <T>
- */
 class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
 
   private Class<T> clazz;

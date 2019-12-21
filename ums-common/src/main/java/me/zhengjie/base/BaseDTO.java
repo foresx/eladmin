@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import lombok.Getter;
 import lombok.Setter;
 
-/** @author Zheng Jie @Date 2019年10月24日20:48:53 */
 @Getter
 @Setter
 public class BaseDTO implements Serializable {

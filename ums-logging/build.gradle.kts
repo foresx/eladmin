@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+    annotationProcessor("org.mapstruct:mapstruct-processor")
     compile(project(":ums-common"))
 
 }

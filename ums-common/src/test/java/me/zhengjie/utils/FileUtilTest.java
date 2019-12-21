@@ -3,19 +3,17 @@ package me.zhengjie.utils;
 import static me.zhengjie.utils.FileUtil.getExtensionName;
 import static me.zhengjie.utils.FileUtil.getFileNameNoEx;
 import static me.zhengjie.utils.FileUtil.getSize;
-import static me.zhengjie.utils.FileUtil.toFile;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.springframework.mock.web.MockMultipartFile;
 
 public class FileUtilTest {
 
-  @Test
-  public void testToFile() {
-    long retval = toFile(new MockMultipartFile("foo", (byte[]) null)).getTotalSpace();
-    assertEquals(500695072768L, retval);
-  }
+  //  @Test
+  //  public void testToFile() {
+  //    long retval = toFile(new MockMultipartFile("foo", (byte[]) null)).getTotalSpace();
+  //    assertEquals(500695072768L, retval);
+  //  }
 
   @Test
   public void testGetExtensionName() {

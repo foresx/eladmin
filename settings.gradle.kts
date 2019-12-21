@@ -3,7 +3,7 @@ rootProject.name = "user-management"
 include(
         "ums-common",
         "ums-logging",
-        "ums"
+        "ums-rest"
 )
 
 pluginManagement {
