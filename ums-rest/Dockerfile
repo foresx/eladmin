@@ -41,5 +41,5 @@ COPY --from=builder /app/application-deployment.yml /app/application-deployment.
 COPY --from=builder /app/sentry.properties /app/sentry.properties
 COPY ./build/libs/ums-rest.jar /app/app.jar
 
-CMD ["java", "-Dorg.jooq.no-logo=true", "-Djava.net.preferIPv4Stack=true", "-Djava.security.egd=file:/dev/urandom",  "-Dlogging.config=classpath:logback-deployment.xml", "-Dspring.profiles.active=default,deployment", "-jar", "/app/app.jar"]
+CMD ["java", "-Dorg.jooq.no-logo=true", "-Djava.net.preferIPv4Stack=true", "-Djava.security.egd=file:/dev/urandom",  "-Dlogging.config=classpath:logback-deployment.xml", "-Dspring.profiles.active=default,deployment,noSecurity", "-jar", "/app/app.jar"]
 

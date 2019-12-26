@@ -32,6 +32,7 @@ dependencies {
 
     implementation(project(":ums-logging"))
     implementation("com.castlery.commons:commons-sentry")
+    implementation("org.zalando:problem-spring-web")
 
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
 
