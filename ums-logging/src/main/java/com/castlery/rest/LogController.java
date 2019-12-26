@@ -1,13 +1,12 @@
 package com.castlery.rest;
 
+import com.castlery.aop.log.Log;
+import com.castlery.service.LogService;
+import com.castlery.service.dto.LogQueryCriteria;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
-import com.castlery.aop.log.Log;
-import com.castlery.service.LogService;
-import com.castlery.service.dto.LogQueryCriteria;
-import com.castlery.utils.SecurityUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +48,7 @@ public class LogController {
   @ApiOperation("用户日志查询")
   public ResponseEntity getUserLogs(LogQueryCriteria criteria, Pageable pageable) {
     criteria.setLogType("INFO");
-    criteria.setBlurry(SecurityUtils.getUsername());
+    //    criteria.setBlurry(SecurityUtils.getUsername());
     return new ResponseEntity<>(logService.queryAllByUser(criteria, pageable), HttpStatus.OK);
   }
 

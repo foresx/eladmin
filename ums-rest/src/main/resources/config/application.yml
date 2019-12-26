@@ -14,6 +14,7 @@ spring.mvc:
     enabled: false
 
 spring.jpa:
+  database-platform: org.hibernate.dialect.PostgreSQLDialect
   open-in-view: false
   database:
   properties:
@@ -72,3 +73,39 @@ swagger:
 
 loginCode:
   expiration: 2
+
+opentracing.jaeger:
+  enabled: true
+  log-spans: false
+  probabilistic-sampler:
+    sampling-rate: 0.2
+
+opentracing.spring.web:
+  skip-pattern: "/v2/api-docs.*|/api-docs.*|/swagger.*|.*\\.png|.*\\.css|.*\\.js|.*\\.html|/favicon.ico|/hystrix.stream|/actuator.*"
+
+opentracing.spring.cloud.jdbc:
+  with-active-span-only: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    mail:
+      enabled: false
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      app_env: ${APP_ENV:unknown}
+      app_version: ${APP_VERSION:unknown}
+    distribution:
+      percentiles:
+        http.server.requests: 0.5, 0.95
+      percentiles-histogram:
+        http.server.requests: true
+      sla:
+        http.server.requests: 100ms

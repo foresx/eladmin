@@ -55,4 +55,5 @@ deploy_app() {
 
 set -x
 deploy_app "ums-rest"
+deploy_app "ums-web"
 echo "Done deployemnt"
