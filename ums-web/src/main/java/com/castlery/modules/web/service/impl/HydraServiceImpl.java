@@ -73,7 +73,7 @@ public class HydraServiceImpl implements HydraService {
   @Override
   public void login(LoginUser user, HttpServletResponse response) throws IOException {
     User databaseUser = userRepository.findByEmail(user.getEmail());
-    if (null == databaseUser) {
+    if (null == databaseUser || !databaseUser.getEnabled()) {
       rejectLogin(user.getChallenge(), response);
     } else {
       BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
@@ -112,6 +112,19 @@ public class HydraServiceImpl implements HydraService {
       throw new InternalError();
     }
 
+  }
+
+  @Override
+  public void logout(String challenge, HttpServletResponse response) {
+    getRequest("logout", challenge);
+    try {
+      String result = putRequest("logout", "accept", challenge, null);
+      CompletedRequest completedRequest = objectMapper.readValue(result, CompletedRequest.class);
+      response.sendRedirect(completedRequest.getRedirectTo());
+    } catch (IOException e) {
+      log.error("Read accept logout response error. {} ", e);
+      throw new InternalError();
+    }
   }
 
   private void rejectLogin(String challenge, HttpServletResponse response)
@@ -155,9 +168,13 @@ public class HydraServiceImpl implements HydraService {
     log.info("Put request hydra url is {}", url);
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
-    HttpEntity<String> entity = new HttpEntity<>(objectMapper.writeValueAsString(body), headers);
-    ResponseEntity<String> responseEntity =
-        restTemplateBuilder.build().exchange(url, HttpMethod.PUT, entity, String.class);
+    ResponseEntity<String> responseEntity;
+    HttpEntity<?> entity = HttpEntity.EMPTY;
+    if (null != body) {
+      entity = new HttpEntity<>(objectMapper.writeValueAsString(body), headers);
+    }
+    responseEntity = restTemplateBuilder.build()
+        .exchange(url, HttpMethod.PUT, entity, String.class);
     HttpStatus statusCode = responseEntity.getStatusCode();
     if (statusCode.is2xxSuccessful()) {
       return responseEntity.getBody();

@@ -15,4 +15,6 @@ public interface HydraService {
       throws IOException;
 
   void consent(String challenge, HttpServletResponse response);
+
+  void logout(String challenge, HttpServletResponse response);
 }

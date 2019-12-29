@@ -1,6 +1,7 @@
 package com.castlery.config.security;
 
 import com.castlery.config.oauth2.CustomAuthorizationRequestResolver;
+import com.castlery.config.oauth2.CustomLogoutHandler;
 import com.castlery.modules.web.dto.Constant;
 import com.castlery.modules.web.service.handler.OAuth2AuthenticationFailureHandler;
 import com.castlery.modules.web.service.handler.OAuth2AuthenticationSuccessHandler;
@@ -26,6 +27,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class OAuth2WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
+  private CustomLogoutHandler customLogoutHandler;
+
+  @Autowired
   private HttpSession session;
 
   @Autowired
@@ -49,6 +53,10 @@ public class OAuth2WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .httpBasic()
         .disable()
         .exceptionHandling()
+        .and()
+        .logout()
+        .logoutUrl("/logout")
+        .addLogoutHandler(customLogoutHandler)
         .and()
         .authorizeRequests()
         .anyRequest()

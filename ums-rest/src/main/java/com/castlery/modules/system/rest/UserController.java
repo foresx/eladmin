@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -124,6 +125,7 @@ public class UserController {
   @Log("删除用户")
   @ApiOperation("删除用户")
   @DeleteMapping(value = "/{id}")
+  @PreAuthorize("deleteable()")
   public ResponseEntity delete(@PathVariable Long id) {
     //    Integer currentLevel =
     //        Collections.min(

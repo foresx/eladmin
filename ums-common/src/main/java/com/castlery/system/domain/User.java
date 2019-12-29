@@ -50,7 +50,7 @@ public class User implements Serializable {
   private String phone;
 
   //  @NotNull
-  private Boolean enabled;
+  private Boolean enabled = true;
 
   private String password;
 

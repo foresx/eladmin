@@ -32,11 +32,6 @@ public class HydraController {
     }
   }
 
-  @GetMapping("/login/page")
-  public ModelAndView login() {
-    return new ModelAndView(Constant.LOGIN_UI);
-  }
-
   @PostMapping("/custom/login")
   public ModelAndView formLogin(@ModelAttribute("userForm") LoginUser userForm,
       HttpServletResponse response) {
@@ -53,5 +48,17 @@ public class HydraController {
   public void consent(@RequestParam("consent_challenge") String challenge,
       HttpServletResponse response) {
     hydraService.consent(challenge, response);
+  }
+
+  @GetMapping("/logout")
+  public void logout(@RequestParam("logout_challenge") String challenge,
+      HttpServletResponse response) {
+    log.info("challenge:  {}", challenge);
+    hydraService.logout(challenge, response);
+  }
+
+  @GetMapping("/logout-successful")
+  public ModelAndView logoutSuccessfulHandler() {
+    return new ModelAndView("logout-success");
   }
 }

@@ -67,6 +67,11 @@ spring:
     port: 6379
     #连接超时时间
     timeout: 5000
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri:
 
 swagger:
   enabled: true
