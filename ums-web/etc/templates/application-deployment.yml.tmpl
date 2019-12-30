@@ -1,0 +1,33 @@
+{{ $secret_path := printf "secret/ums/%s" (env "APP_ENV") }}
+{{ with secret $secret_path }}
+
+spring.datasource:
+  url: {{ .Data.database_url }}
+  username: {{ .Data.database_username }}
+  password: {{ .Data.database_password }}
+
+spring.redis:
+  database: {{ .Data.redis_database }}
+  host: {{ .Data.redis_host }}
+
+hydra:
+  admin:
+    url: {{ .Data.hydra_admin_url }}
+
+spring.security.oauth2:
+  client:
+    registration:
+      azure:
+        client-id: {{ .Data.ad_client_id}}
+        client-secret: {{ .Data.ad_client_secret}}
+azure:
+  activedirectory:
+    user-group:
+      allowed-groups: {{ .Data.allowed_groups}}
+    tenant-id: {{ .Data.tenant_id}}
+
+opentracing.jaeger:
+  tags:
+    version: {{ or (env "APP_VERSION") "unknown" }}
+
+{{ end }}

@@ -1,18 +1,18 @@
 package com.castlery.modules.system.rest;
 
-import com.castlery.config.DataScope;
-import com.castlery.modules.system.service.DeptService;
-import com.castlery.modules.system.service.dto.DeptDTO;
-import com.castlery.modules.system.service.dto.DeptQueryCriteria;
+import com.castlery.aop.log.Log;
+import com.castlery.system.service.DataScope;
+import com.castlery.exception.BadRequestException;
+import com.castlery.system.domain.Dept;
+import com.castlery.system.service.DeptService;
+import com.castlery.system.service.dto.DeptDTO;
+import com.castlery.system.service.dto.DeptQueryCriteria;
+import com.castlery.utils.ThrowableUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
-import com.castlery.aop.log.Log;
-import com.castlery.exception.BadRequestException;
-import com.castlery.modules.system.domain.Dept;
-import com.castlery.utils.ThrowableUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

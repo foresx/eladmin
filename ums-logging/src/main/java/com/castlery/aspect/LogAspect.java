@@ -1,13 +1,12 @@
 package com.castlery.aspect;
 
-import javax.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
 import com.castlery.domain.Log;
 import com.castlery.service.LogService;
 import com.castlery.utils.RequestHolder;
-import com.castlery.utils.SecurityUtils;
 import com.castlery.utils.StringUtils;
 import com.castlery.utils.ThrowableUtil;
+import javax.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -15,6 +14,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
+
+//import com.castlery.utils.SecurityUtils;
 
 /**
  * @author Zheng Jie
@@ -33,7 +34,9 @@ public class LogAspect {
     this.logService = logService;
   }
 
-  /** 配置切入点 */
+  /**
+   * 配置切入点
+   */
   @Pointcut("@annotation(com.castlery.aop.log.Log)")
   public void logPointcut() {
     // 该方法无方法体,主要为了让同类中其他方法使用此切入点
@@ -77,7 +80,8 @@ public class LogAspect {
 
   public String getUsername() {
     try {
-      return SecurityUtils.getUsername();
+      return "";
+      //      return SecurityUtils.getUsername();
     } catch (Exception e) {
       return "";
     }

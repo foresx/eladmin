@@ -11,13 +11,14 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("cn.hutool:hutool-all:5.1.0")
+    compile("org.springframework.boot:spring-boot-starter-security")
+
     //swagger
     compile("io.springfox:springfox-swagger2")
     compile("io.springfox:springfox-swagger-ui")
     compile("org.springframework.boot:spring-boot-starter-data-redis")
     compile("org.apache.commons:commons-pool2:2.5.0")
     compile("org.apache.commons:commons-lang3")
-    compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-starter-cache")
     compile("com.alibaba:fastjson")
     compile("org.lionsoul:ip2region")

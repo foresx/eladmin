@@ -33,7 +33,7 @@ deployment:
 ingress:
   enabled: false
   annotations:
-    kubernetes.io/ingress.class: private-nginx
+    kubernetes.io/ingress.class: public-internal
     nginx.ingress.kubernetes.io/configuration-snippet: |
       more_set_headers "X-Request-Id: $req_id";
       location /actuator {
