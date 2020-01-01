@@ -1,0 +1,23 @@
+{{- if and .Values.metrics.enabled .Values.metrics.serviceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "ums-rest.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "ums-rest.name" . }}
+    helm.sh/chart: {{ include "ums-rest.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  endpoints:
+    - port: http
+      path: "/actuator/prometheus"
+      interval: 10s
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "ums-rest.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}

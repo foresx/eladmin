@@ -1,0 +1,19 @@
+replicaCount: 1
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 1536Mi
+  limits:
+    memory: 3072Mi
+
+ingress:
+  enabled: true
+  hosts:
+    - host: ums-rest-dev.castlery.com
+      paths:
+        - "/"
+  tls:
+    - secretName: tls-castlery-com
+      hosts:
+        - ums-rest-dev.castlery.com

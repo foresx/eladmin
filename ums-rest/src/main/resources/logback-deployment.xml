@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+  <!-- Configure the Sentry appender, overriding the logging threshold to the WARN level -->
+  <appender name="SENTRY" class="io.sentry.logback.SentryAppender">
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>WARN</level>
+    </filter>
+  </appender>
+
+  <logger name="org.springframework.web" level="INFO"/>
+  <logger name="com.castlery" level="DEBUG"/>
+
+  <!--输出到控制台-->
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{36}) - %gray(%msg%n)
+      </pattern>
+      <charset>utf-8</charset>
+    </encoder>
+  </appender>
+
+  <!--普通日志输出到控制台-->
+  <root level="info">
+    <appender-ref ref="console"/>
+    <appender-ref ref="SENTRY"/>
+  </root>
+
+
+</configuration>

@@ -1,0 +1,17 @@
+{{- if and .Values.metrics.enabled .Values.metrics.prometheusRule.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ template "ums-rest.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "ums-rest.name" . }}
+    helm.sh/chart: {{ include "ums-rest.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  {{- with .Values.metrics.prometheusRule.rules }}
+  groups:
+    - name: {{ template "ums-rest.name" $ }}
+      rules: {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

@@ -1,0 +1,23 @@
+{{ $secret_path := printf "secret/ums/%s" (env "APP_ENV") }}
+{{ with secret $secret_path }}
+
+spring.datasource:
+  url: {{ .Data.database_url }}
+  username: {{ .Data.database_username }}
+  password: {{ .Data.database_password }}
+
+spring.redis:
+  database: {{ .Data.redis_database }}
+  host: {{ .Data.redis_host }}
+
+spring.security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: {{ .Data.issuser_uri}}
+
+#opentracing.jaeger:
+#  tags:
+#    version: {{ or (env "APP_VERSION") "unknown" }}
+
+{{ end }}
