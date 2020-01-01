@@ -129,7 +129,7 @@ subprojects {
     }
 
     dependencyManagement {
-        val springBootVersion = "2.1.6.RELEASE"
+        val springBootVersion = "2.2.1.RELEASE"
 //        val springCloudStreamVersion = "Fishtown.SR3"
         val mapstructVersion = "1.3.0.Final"
         val swaggerVersion = "2.9.2"
@@ -180,8 +180,11 @@ subprojects {
             dependency("org.apache.poi:poi-ooxml:3.17")
             dependency("xerces:xercesImpl:2.11.0")
             dependency("javax.inject:javax.inject:1")
+            dependency("org.zalando:problem-spring-web:0.24.0")
+            dependency("org.zalando:problem:0.23.0")
             dependency("io.springfox:springfox-swagger2:$swaggerVersion")
             dependency("io.springfox:springfox-swagger-ui:$swaggerVersion")
+            dependency("com.github.ory:hydra-client-resttemplate:1.0.0")
             // castlery-commons
             dependencySet("com.castlery.commons:1.0.2") {
                 entry("commons-sentry")

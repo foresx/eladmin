@@ -54,5 +54,6 @@ deploy_app() {
 [ -f ${DIR}/env ] && echo "Sourcing ${DIR}/env" && . "${DIR}/env"
 
 set -x
-deploy_app "ums"
+deploy_app "ums-rest"
+deploy_app "ums-web"
 echo "Done deployemnt"

@@ -91,8 +91,9 @@ def build_app_image(String application_env) {
             '''
         }
       }
-
+      publish_image('ums-deploy', "${APPLICATION_ENV}")
       publish_image('ums-rest', "${APPLICATION_ENV}")
+      publish_image('ums-web', "${APPLICATION_ENV}")
     }
   }
 }

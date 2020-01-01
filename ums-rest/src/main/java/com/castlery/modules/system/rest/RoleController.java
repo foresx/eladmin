@@ -1,9 +1,12 @@
 package com.castlery.modules.system.rest;
 
 import cn.hutool.core.lang.Dict;
-import com.castlery.modules.system.domain.Role;
-import com.castlery.modules.system.service.RoleService;
-import com.castlery.modules.system.service.dto.RoleQueryCriteria;
+import com.castlery.aop.log.Log;
+import com.castlery.exception.BadRequestException;
+import com.castlery.system.domain.Role;
+import com.castlery.system.service.RoleService;
+import com.castlery.system.service.dto.RoleQueryCriteria;
+import com.castlery.utils.ThrowableUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.io.IOException;
@@ -11,9 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
-import com.castlery.aop.log.Log;
-import com.castlery.exception.BadRequestException;
-import com.castlery.utils.ThrowableUtil;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -71,9 +71,9 @@ public class RoleController {
   @GetMapping(value = "/all")
   public ResponseEntity getAll(
       @PageableDefault(
-              value = 2000,
-              sort = {"level"},
-              direction = Sort.Direction.ASC)
+          value = 2000,
+          sort = {"level"},
+          direction = Sort.Direction.ASC)
           Pageable pageable) {
     return new ResponseEntity<>(roleService.queryAll(pageable), HttpStatus.OK);
   }

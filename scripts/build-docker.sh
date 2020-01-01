@@ -28,8 +28,19 @@ docker build -t $APP_NAME:${APP_ENV}_${IMAGE_TAG} \
     --build-arg APP_ENV="$APP_ENV" ${MODULE_DIR}
 
 
-# build oms-graphql image
+# build ums-rest image
 APP_NAME=ums-rest
+echo "Building image for ${APP_NAME}"
+MODULE_DIR=${PROJ_DIR}/${APP_NAME}
+docker build -t $APP_NAME:${APP_ENV}_${IMAGE_TAG} \
+    -f ${MODULE_DIR}/Dockerfile --force-rm \
+    --build-arg VAULT_TOKEN="$VAULT_TOKEN" \
+    --build-arg APP_NAME="$APP_NAME" \
+    --build-arg APP_VERSION="$APP_VERSION" \
+    --build-arg APP_ENV="$APP_ENV" ${MODULE_DIR}
+
+# build ums-sso image
+APP_NAME=ums-web
 echo "Building image for ${APP_NAME}"
 MODULE_DIR=${PROJ_DIR}/${APP_NAME}
 docker build -t $APP_NAME:${APP_ENV}_${IMAGE_TAG} \

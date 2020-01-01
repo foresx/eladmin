@@ -1,9 +1,9 @@
 package com.castlery.modules.security.service;
 
-import com.castlery.modules.security.security.JwtUser;
-import com.castlery.modules.system.service.UserService;
-import com.castlery.modules.system.service.dto.UserDTO;
 import com.castlery.exception.BadRequestException;
+import com.castlery.modules.security.security.JwtUser;
+import com.castlery.system.service.UserService;
+import com.castlery.system.service.dto.UserDTO;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;

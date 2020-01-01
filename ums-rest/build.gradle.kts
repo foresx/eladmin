@@ -32,10 +32,14 @@ dependencies {
 
     implementation(project(":ums-logging"))
     implementation("com.castlery.commons:commons-sentry")
+    implementation("org.zalando:problem-spring-web")
 
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
 
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.security:spring-security-data")
+    implementation("org.springframework.security:spring-security-oauth2-jose")
+    implementation("org.springframework.security:spring-security-oauth2-resource-server")
 
 
 

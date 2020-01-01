@@ -59,6 +59,11 @@ spring:
         jdbc.time_zone: UTC
   main:
     banner-mode: "off"
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "http://localhost:9000/"
 
 ##是否开启 swagger-ui
 #swagger:
